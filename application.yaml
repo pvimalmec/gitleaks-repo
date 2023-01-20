@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: admin
-    password: test123
+    password: test1234
 app.client:
   app2:
     datasource:
