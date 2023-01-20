@@ -1,0 +1,49 @@
+title = "gitleaks config"
+
+[scanners.file_extensions]
+extensions = ["properties","yaml"]
+
+[[rules]]
+description = "Generic Secerts in resources"
+regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+path = '''(?i)(\.prop*|\.yml|\.yaml)'''
+tags = ["key", "properties"]
+
+
+[[rules]]
+description = "yaml secrets"
+regex = '''(?i)(password|enc.key|auth.pass):\s+(.*)'''
+path = '''(?i)(\.prop*|\.yml|\.yaml)'''
+tags = ["yaml"]
+
+[[rules]]
+id = "slack"
+description = "Slack"
+regex = '''xox[baprs]-([0-9a-zA-Z]{10,48})?'''
+tags = ["key", "Slack"]
+
+[[rules]]
+id = "apkey"
+description = "Asymmetric Private Key"
+regex = '''-----BEGIN ((EC|PGP|DSA|RSA|OPENSSH) )?PRIVATE KEY( BLOCK)?-----'''
+tags = ["key", "AsymmetricPrivateKey"]
+
+[[rules]]
+id = "slack-webhook"
+description = "Slack Webhook"
+regex = '''https://hooks.slack.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8,12}/[a-zA-Z0-9_]{24}'''
+tags = ["key", "slack"]
+
+[[rules]]
+id = "pypi"
+description = "PyPI upload token"
+regex = '''pypi-AgEIcHlwaS5vcmc[A-Za-z0-9-_]{50,1000}'''
+tags = ["key", "pypi"]
+
+[[rules]]
+description = "Generic API Key"
+id = "generic-api-key"
+regex = '''(?i)((key|api|token|secret|password)[a-z0-9_ .\-,]{0,25})(=|>|:=|\|\|:|<=|=>|:).{0,5}['\"]([0-9a-zA-Z\-_=]{8,64})['\"]'''
+path = '''.py'''
+entropy = 3.7
+secretGroup = 4
