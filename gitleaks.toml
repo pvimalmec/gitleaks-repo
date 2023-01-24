@@ -1,18 +1,19 @@
 title = "gitleaks config"
 
-[scanners.file_extensions]
-extensions = ["properties","yaml"]
 
 [[rules]]
+id = "properties"
 description = "Generic Secerts in resources"
-regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{10,150})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
-path = '''(?i)(\.prop*|\.yml|\.yaml)'''
+regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{5,150})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+path = '''(?i)(\.prop*)'''
 tags = ["key", "properties"]
 
+
 [[rules]]
+id = "yaml"
 description = "yaml secrets"
 regex = '''(?i)(password|enc.key|auth.pass):\s+(.*)'''
-path = '''(?i)(\.prop*|\.yml|\.yaml)'''
+path = '''(?i)(\.yml|\.yaml)'''
 tags = ["yaml"]
 
 [[rules]]
@@ -42,7 +43,9 @@ tags = ["key", "pypi"]
 [[rules]]
 description = "Generic API Key"
 id = "generic-api-key"
-regex = '''(?i)((key|api|token|secret|password)[a-z0-9_ .\-,]{0,25})(=|>|:=|\|\|:|<=|=>|:).{0,5}['\"]([0-9a-zA-Z\-_=]{8,64})['\"]'''
-path = '''.py'''
-entropy = 3.7
-secretGroup = 4
+regex = '''(?i)(?:key|api|token|secret|client|passwd|password|auth|access)(?:[0-9a-z\-_\t .]{0,20})(?:[\s|']|[\s|"]){0,3}(?:=|>|:=|\|\|:|<=|=>|:)(?:'|\"|\s|=|\x60){0,5}([0-9a-z\-_.=]{5,150})(?:['|\"|\n|\r|\s|\x60|;]|$)'''
+secretGroup = 1
+entropy = 3.5
+keywords = [
+    "key","api","token","secret","client","passwd","password","auth","access",
+]
