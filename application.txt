@@ -1,2 +1,11 @@
-spring.datasource.username=User
-spring.datasource.password=ad1234
+spring:
+  datasource:
+    username: admin
+    password: test1234
+app.client:
+  app2:
+    datasource:
+      driverClassName: oracle.jdbc.OracleDriver
+      username: xxxxx
+      password: dbpwd
+      validationQuery: "SELECT 1 FROM dual"
